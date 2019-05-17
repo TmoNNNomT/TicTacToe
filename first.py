@@ -84,7 +84,7 @@ def initialize(Node):
                 child.win = w
 
 
-def CheckWin(position):
+def CheckWin(position):                           # position is list of all moves in the order they were moved
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     k = 1
     for move in position:
@@ -94,20 +94,15 @@ def CheckWin(position):
         else:
             board[move] = -1
             k = 1
-    # if position == [0, 3, 1, 2, 4, 7, 8, 5]:    #[1, 1, -1, -1, 1, -1, 0, -1, 1]
-    #     print(board)
-    # print(board)
+   
     if [board[0], board[1], board[2]] == [1, 1, 1] or [board[3], board[4], board[5]] == [1, 1, 1] or [board[6], board[7], board[8]] == [1, 1, 1]:
-        # if board == [1, 1, -1, -1, 1, -1, 0, -1, 1]:
-        #     print('11111111')
+
         return 1
     elif [board[0], board[3], board[6]] == [1, 1, 1] or [board[1], board[4], board[7]] == [1, 1, 1] or [board[2], board[5], board[8]] == [1, 1, 1]:
-        # if board == [1, 1, -1, -1, 1, -1, 0, -1, 1]:
-        #     print('2222')
+ 
         return 1
     elif [board[0], board[4], board[8]] == [1, 1, 1] or [board[2], board[4], board[6]] == [1, 1, 1]:
-        # if board == [1, 1, -1, -1, 1, -1, 0, -1, 1]:
-        #     print('33333333333333')
+
         return 1
 
     if [board[0], board[1], board[2]] == [-1, -1, -1] or [board[3], board[4], board[5]] == [-1, -1, -1] or [board[6], board[7], board[8]] == [-1, -1, -1]:
@@ -144,18 +139,18 @@ def CreateBoard(position):
     return real
 
 
-def Minimax(Node):
+def Minimax(Node):                                  # Starts from end leaves, then work upwards picking best moves for each turn
     global count
     count+=1
     if not Node.children:
         return
-    # print('yes')
+    
 
     for child in Node.children:
         if child.value == []:
             break
         Minimax(child)
-        # print('childlevel=', child.level)
+        
         flag = 0
 
         for baby in Node.children:
@@ -185,6 +180,7 @@ def play(node):
         computer = 1
         turn = 0
     flag = choice
+    
     while win == 0:
         if choice:
             move = int(input('Enter your move: '))
@@ -239,12 +235,12 @@ def bestmove(node, n, computer, choice):
                 break
     else:
         child = node
-    if choice:
+    if choice:                              # choice is equal to 1 after first turn is over
         for child in node.children:
             if child.value == n:
                 break
 
-    # print(node.player, ' player moved:', child.value)
+    
     flag = 0
     for baby in child.children:
         #print(baby.win)
